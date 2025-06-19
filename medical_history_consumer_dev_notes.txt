@@ -1,0 +1,26 @@
+echo '{"Id":1,"FirstName":"John","LastName":"Doe","MedicalHistory":[{"Id":101,"Diagnosis":"Hypertension","Date":"2023-05-01"},{"Id":102,"Diagnosis":"Diabetes","Date":"2022-11-15"}]}' \
+| kafka-console-producer --broker-list localhost:9092 --topic patient-medical-history
+
+
+Received raw message: {"id":1,"firstName":"John","lastName":"Doe","medicalHistory":[{"id":101,"diagnosis":"Hypertension","date":"2023-05-01"},{"id":102,"diagnosis":"Diabetes","date":"2022-11-15"}]}
+Received patient:  
+{
+  "Id": 0,
+  "FirstName": "",
+  "LastName": "",
+  "Age": 0,
+  "MedicalHistory": []
+}
+Patient 5 saved/updated.
+
+
+
+ [quirkfly: ~/job_stuff/prj/medbot/MedicalHistoryConsumer] 15m13s $ docker exec -it 63f3099fe5d7 bash
+[appuser@63f3099fe5d7 ~]$ kafka-topics --bootstrap-server localhost:9092 --create --topic patient-medical-history --partitions 1 --replication-factor 1
+[2025-06-19 08:42:01,589] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+[2025-06-19 08:42:01,693] WARN [AdminClient clientId=adminclient-1] Connection to node -1 (localhost/127.0.0.1:9092) could not be established. Node may not be available. (org.apache.kafka.clients.NetworkClient)
+
+$ docker ps
+CONTAINER ID   IMAGE                              COMMAND                  CREATED              STATUS              PORTS                                                           NAMES
+3e43c44df700   confluentinc/cp-kafka:7.5.0        "/etc/confluent/dock…"   About a minute ago   Up About a minute   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp                       medicalhistoryconsumer_kafka_1
+63f3099fe5d7   confluentinc/cp-zookeeper:latest   "/etc/confluent/dock…"   About a minute ago   Up About a minute   2888/tcp, 0.0.0.0:2181->2181/tcp, :::2181->2181/tcp, 3888/tcp   medicalhistoryconsumer_zookeeper_1
