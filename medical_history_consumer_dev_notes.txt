@@ -1,0 +1,27 @@
+echo '{"Id":1,"FirstName":"John","LastName":"Doe","MedicalHistory":[{"Id":101,"Diagnosis":"Hypertension","Date":"2023-05-01"},{"Id":102,"Diagnosis":"Diabetes","Date":"2022-11-15"}]}' \
+| kafka-console-producer --broker-list localhost:9092 --topic patient-medical-history
+
+
+Received raw message: {"id":1,"firstName":"John","lastName":"Doe","medicalHistory":[{"id":101,"diagnosis":"Hypertension","date":"2023-05-01"},{"id":102,"diagnosis":"Diabetes","date":"2022-11-15"}]}
+Received patient:  
+{
+  "Id": 0,
+  "FirstName": "",
+  "LastName": "",
+  "Age": 0,
+  "MedicalHistory": []
+}
+Patient 5 saved/updated.
+
+
+
+[quirkfly: ~/job_stuff/prj/medbot/MedicalHistoryConsumer] 13m5s $ docker ps
+CONTAINER ID   IMAGE                         COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+591a6fb7c0b0   confluentinc/cp-kafka:7.5.0   "/etc/confluent/dock…"   3 seconds ago   Up 2 seconds   0.0.0.0:9092->9092/tcp, :::9092->9092/tcp   moebot-kafka
+
+%3|1750325071.464|ERROR|rdkafka#consumer-1| [thrd:app]: rdkafka#consumer-1: localhost:9092/bootstrap: Connect to ipv6#[::1]:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1750325071.515|FAIL|rdkafka#consumer-1| [thrd:localhost:9092/bootstrap]: localhost:9092/bootstrap: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1750325071.515|ERROR|rdkafka#consumer-1| [thrd:app]: rdkafka#consumer-1: localhost:9092/bootstrap: Connect to ipv4#127.0.0.1:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1750325071.566|FAIL|rdkafka#consumer-1| [thrd:localhost:9092/bootstrap]: localhost:9092/bootstrap: Connect to ipv6#[::1]:9092 failed: Connection refused (after 0ms in state CONNECT)
+%3|1750325071.566|ERROR|rdkafka#consumer-1| [thrd:app]: rdkafka#consumer-1: localhost:9092/bootstrap: Connect to ipv6#[::1]:9092 failed: Connection refused (after 0ms in state CONNECT)
+
